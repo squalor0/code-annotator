@@ -6,6 +6,10 @@ const PORT = 3000;
 app.use(express.json());
 app.use(express.static('public'));
 
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/public/index.html');
+});
+
 app.post('/comment', async (req, res) => {
   const { code } = req.body;
   console.log('Recieved code:', code);
@@ -19,7 +23,7 @@ app.post('/comment', async (req, res) => {
         model: 'tinyllama',
         messages: [{
           role: 'user',
-          content: `Generate concise explanatory comments for this JavaScript code. Return ONLY the comments:\n\n${code}`
+          content: `Generate concise explanatory comments for this JavaScript code for the purpose of annotation:\n\n${code}`
         }],
         temperature: 0.3,
         max_tokens: 200
