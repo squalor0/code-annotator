@@ -31,7 +31,9 @@ app.post('/comment', async (req, res) => {
     console.log('Response data:', data);
     const comments = data.choices?.[0]?.message?.content || JSON.stringify(data);
     console.log('Comments:', comments);
+    console.log('Sending respons...');
     res.json({ comments });
+    console.log('Response sent!');
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: error.message });
