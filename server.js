@@ -7,8 +7,10 @@ app.use(express.static('public'));
 
 app.post('/comment', async (req, res) => {
   const { code } = req.body;
+  console.log('Recieved code:', code);
   
   try {
+    console.log('Calling Ollama...');
     const response = await fetch('http://localhost:11434/v1/chat/completions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -22,11 +24,14 @@ app.post('/comment', async (req, res) => {
         max_tokens: 200
       })
     });
-    
+
+    console.log('Response status:', response.status);
     const data = await response.json();
+    console.log('Response data:', data);
     const comments = data.choices[0].message.content;
     res.json({ comments });
   } catch (error) {
+    console.error('Error:', error);
     res.status(500).json({ error: error.message });
   }
 });
