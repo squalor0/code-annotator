@@ -38,7 +38,9 @@
         });
 
         clearTimeout(timeoutId);
-        const data = await res.json();
+        const text = await res.text();
+        console.log('Raw response:', text);
+        const data = JSON.parse(text);
         document.getElementById('result').textContent = data.comments || data.error;
       } catch (err) {
         document.getElementById('result').textContent = 'Error: ' + err.message;
