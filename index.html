@@ -27,17 +27,12 @@
       document.getElementById('result').textContent = 'Generating...';
       
       try {
-        const controller = new AbortController()
-        const timeoutId = setTimeout(() => controller.abort(), 1800000);
-        
         const res = await fetch('/comment', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ code })
-          signal: controller.signal
         });
 
-        clearTimeout(timeoutId);
         const text = await res.text();
         console.log('Raw response:', text);
         const data = JSON.parse(text);
